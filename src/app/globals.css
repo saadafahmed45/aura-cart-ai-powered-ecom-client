@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+:root {
+  /* ========================================================== */
+  /* LIGHT MODE BRAND SYSTEM - CHANGE THESE FOR EASY THEMING   */
+  /* ========================================================== */
+  
+  /* Primary brand & CTA buttons (Default: Slate Dark) */
+  --primary: #0f172a;
+  --primary-foreground: #f8fafc;
+  
+  /* Base Background and Canvas layers */
+  --background: #fafafa;
+  --foreground: #09090b;
+  
+  /* Layout Cards and Popups */
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
+  
+  /* Muted backgrounds and helper texts */
+  --muted: #f8fafc;
+  --muted-foreground: #64748b;
+  
+  /* Accent highlights & Hover states */
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  
+  /* Error and Alert Indicators */
+  --destructive: #ef4444;
+  --destructive-foreground: #f8fafc;
+  
+  /* Borders, Input outlines and Focus Ring */
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0f172a;
+  
+  --radius: 0.5rem;
+}
+
+.dark {
+  /* ========================================================== */
+  /* DARK MODE BRAND SYSTEM - CHANGE THESE FOR DARK THEMES      */
+  /* ========================================================== */
+  
+  /* Primary brand & CTA buttons (Default: Slate light) */
+  --primary: #fafafa;
+  --primary-foreground: #0f172a;
+  
+  /* Base Background and Canvas layers */
+  --background: #09090b;
+  --foreground: #fafafa;
+  
+  /* Layout Cards and Popups */
+  --card: #0d0d11;
+  --card-foreground: #fafafa;
+  --popover: #0d0d11;
+  --popover-foreground: #fafafa;
+  
+  /* Muted backgrounds and helper texts */
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  
+  /* Accent highlights & Hover states */
+  --accent: #1e293b;
+  --accent-foreground: #fafafa;
+  --secondary: #1e293b;
+  --secondary-foreground: #fafafa;
+  
+  /* Error and Alert Indicators */
+  --destructive: #7f1d1d;
+  --destructive-foreground: #fafafa;
+  
+  /* Borders, Input outlines and Focus Ring */
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: #cbd5e1;
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass {
+  background: rgba(13, 13, 17, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
