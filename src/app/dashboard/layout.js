@@ -79,7 +79,7 @@ export default function DashboardLayout({ children }) {
           </span>
         </div>
 
-        <nav className="flex flex-col gap-1.5 flex-1">
+        <nav className="flex flex-col gap-1 flex-1">
           {sidebarLinks.map((link) => {
             const Icon = link.icon;
             const active = pathname === link.path;
@@ -87,7 +87,11 @@ export default function DashboardLayout({ children }) {
               <Link
                 key={link.name}
                 href={link.path}
-                className={`flex items-center gap-3 px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${active ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-secondary hover:text-foreground'}`}
+                className={`flex items-center gap-3 px-3 py-2 text-sm font-medium transition-all duration-150 hover:translate-x-0.5 ${
+                  active 
+                    ? 'bg-secondary/80 text-foreground font-semibold border-l-2 border-primary rounded-r-lg rounded-l-none' 
+                    : 'text-muted-foreground hover:bg-secondary/40 hover:text-foreground'
+                }`}
               >
                 <Icon className="h-4 w-4" /> {link.name}
               </Link>
@@ -115,7 +119,7 @@ export default function DashboardLayout({ children }) {
               </button>
             </div>
 
-            <nav className="flex flex-col gap-1.5 flex-1">
+            <nav className="flex flex-col gap-1 flex-1">
               {sidebarLinks.map((link) => {
                 const Icon = link.icon;
                 const active = pathname === link.path;
@@ -124,7 +128,11 @@ export default function DashboardLayout({ children }) {
                     key={link.name}
                     href={link.path}
                     onClick={() => setIsSidebarOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${active ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-secondary hover:text-foreground'}`}
+                    className={`flex items-center gap-3 px-3 py-2 text-sm font-medium transition-all duration-150 ${
+                      active 
+                        ? 'bg-secondary/80 text-foreground font-semibold border-l-2 border-primary rounded-r-lg rounded-l-none' 
+                        : 'text-muted-foreground hover:bg-secondary/40 hover:text-foreground'
+                    }`}
                   >
                     <Icon className="h-4 w-4" /> {link.name}
                   </Link>

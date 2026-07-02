@@ -97,9 +97,9 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 glass">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold tracking-tight text-white dark:text-black dark:bg-white">
-            AuraCart
+        <Link href="/" className="flex items-center gap-2 group">
+          <span className="text-xl font-black tracking-tight text-foreground transition-colors">
+            Aura<span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">Cart</span>
           </span>
         </Link>
 
@@ -142,7 +142,11 @@ export default function Navbar() {
 
           <Link
             href="/products"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className={`text-sm font-medium transition-colors ${
+              pathname === '/products'
+                ? 'text-foreground font-semibold'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
           >
             Shop
           </Link>
