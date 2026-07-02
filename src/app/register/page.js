@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { GoogleLogin } from '@react-oauth/google';
 import { registerSchema } from '../../validators/schemas';
 import { useAuth } from '../../hooks/useAuth';
 import { useAuthStore } from '../../store/authStore';
@@ -12,7 +13,7 @@ import { User, Lock, Mail, ArrowRight } from 'lucide-react';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { register: registerUser } = useAuth();
+  const { register: registerUser, googleLogin } = useAuth();
   const { isAuthenticated } = useAuthStore();
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -36,6 +37,16 @@ export default function RegisterPage() {
     }
   };
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setErrorMsg('');
+    try {
+      await googleLogin(credentialResponse.credential);
+      router.push('/');
+    } catch (err) {
+      setErrorMsg(err.response?.data?.error || 'Google sign-up failed. Please try again.');
+    }
+  };
+
   return (
     <div className="flex min-h-[80vh] items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-background">
       <div className="w-full max-w-md bg-card border border-border p-8 rounded-2xl shadow-lg">
@@ -45,6 +56,29 @@ export default function RegisterPage() {
           <p className="text-sm text-muted-foreground mt-2">
             Join us today and enjoy quick checkouts and order trackings.
           </p>
+        </div>
+
+        {/* Google Sign Up Button */}
+        <div className="flex justify-center mb-5">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setErrorMsg('Google sign-up failed')}
+            theme="outline"
+            size="large"
+            width="100%"
+            text="signup_with"
+            shape="rectangular"
+          />
+        </div>
+
+        {/* Divider */}
+        <div className="relative mb-5">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-border"></div>
+          </div>
+          <div className="relative flex justify-center text-xs">
+            <span className="bg-card px-3 text-muted-foreground font-medium">or register with email</span>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -140,3 +174,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+

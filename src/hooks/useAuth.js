@@ -46,6 +46,17 @@ export function useAuth() {
     }
   });
 
+  const googleLoginMutation = useMutation({
+    mutationFn: async (credential) => {
+      const res = await api.post('/auth/google', { credential });
+      return res.data;
+    },
+    onSuccess: (data) => {
+      setCredentials(data.user, data.accessToken);
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+    }
+  });
+
   const profileQuery = useQuery({
     queryKey: ['profile'],
     queryFn: async () => {
@@ -124,6 +135,9 @@ export function useAuth() {
     isUpdatingAddress: updateAddressMutation.isPending,
 
     deleteAddress: deleteAddressMutation.mutateAsync,
-    isDeletingAddress: deleteAddressMutation.isPending
+    isDeletingAddress: deleteAddressMutation.isPending,
+
+    googleLogin: googleLoginMutation.mutateAsync,
+    isGoogleLoggingIn: googleLoginMutation.isPending
   };
 }

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useProducts } from '../hooks/useProducts';
 import { useCategories } from '../hooks/useCategories';
 import ProductCard from '../components/shop/ProductCard';
+import HeroSlider from '../components/shop/HeroSlider';
 import { motion } from 'framer-motion';
 import { ArrowRight, Star, ShoppingBag, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
 
@@ -24,55 +25,8 @@ export default function Home() {
   return (
     <div className="w-full flex flex-col min-h-screen bg-background">
       
-      {/* 1. Hero Section */}
-      <section className="relative w-full overflow-hidden dark:bg-slate-950 bg-gradient-to-br from-slate-100 to-slate-200  py-20 lg:py-32">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent"></div>
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col gap-6"
-          >
-            <span className="inline-flex w-fit items-center rounded-full bg-slate-900/10 dark:bg-slate-100/10 px-3 py-1 text-xs font-semibold tracking-wider text-slate-800 dark:text-slate-200">
-              SUMMER COLLECTION 2026
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]">
-              Elevate Your <br />
-              <span className="bg-gradient-to-r from-blue-600 to-violet-500 bg-clip-text text-transparent">
-                Shopping Experience
-              </span>
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-md">
-              Discover curated aesthetics, elite tech, fashion essentials, and luxury items with lightning-fast delivery options.
-            </p>
-            <div className="flex gap-4">
-              <Link href="/products" className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/95 transition-colors">
-                Shop Now <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link href="/products?sort=popular" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground hover:bg-secondary transition-colors">
-                Trending Items
-              </Link>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="relative hidden lg:flex items-center justify-center"
-          >
-            <div className="absolute w-80 h-80 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 blur-3xl opacity-30 animate-pulse"></div>
-            <img
-              src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop"
-              alt="Hero headphones"
-              className="relative z-10 w-full max-w-md object-contain rounded-2xl shadow-2xl"
-            />
-          </motion.div>
-
-        </div>
-      </section>
+      {/* 1. Dynamic Hero Slider */}
+      <HeroSlider />
 
       {/* 2. Core Trust Badges */}
       <section className="border-y border-border bg-card/50 py-8">

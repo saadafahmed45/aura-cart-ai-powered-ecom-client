@@ -12,6 +12,7 @@ import {
   Receipt, 
   Tag, 
   MessageSquare,
+  Image,
   ArrowLeft,
   Settings,
   Menu,
@@ -64,7 +65,8 @@ export default function DashboardLayout({ children }) {
     { name: 'Categories', path: '/dashboard/categories', icon: FolderTree },
     { name: 'Orders', path: '/dashboard/orders', icon: Receipt },
     { name: 'Coupons', path: '/dashboard/coupons', icon: Tag },
-    { name: 'Reviews', path: '/dashboard/reviews', icon: MessageSquare }
+    { name: 'Reviews', path: '/dashboard/reviews', icon: MessageSquare },
+    { name: 'Hero Slides', path: '/dashboard/hero-slides', icon: Image }
   ];
 
   return (

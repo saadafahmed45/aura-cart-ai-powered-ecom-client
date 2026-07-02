@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { GoogleLogin } from '@react-oauth/google';
 import { loginSchema } from '../../validators/schemas';
 import { useAuth } from '../../hooks/useAuth';
 import { useAuthStore } from '../../store/authStore';
@@ -12,7 +13,7 @@ import { User, Lock, ArrowRight } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, googleLogin } = useAuth();
   const { isAuthenticated, user } = useAuthStore();
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -45,6 +46,20 @@ export default function LoginPage() {
     }
   };
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setErrorMsg('');
+    try {
+      const res = await googleLogin(credentialResponse.credential);
+      if (res.user?.role === 'admin') {
+        router.push('/dashboard');
+      } else {
+        router.push('/');
+      }
+    } catch (err) {
+      setErrorMsg(err.response?.data?.error || 'Google sign-in failed. Please try again.');
+    }
+  };
+
   return (
     <div className="flex min-h-[80vh] items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-background">
       <div className="w-full max-w-md bg-card border border-border p-8 rounded-2xl shadow-lg">
@@ -54,6 +69,29 @@ export default function LoginPage() {
           <p className="text-sm text-muted-foreground mt-2">
             Please sign in to access your orders and profile.
           </p>
+        </div>
+
+        {/* Google Sign In Button */}
+        <div className="flex justify-center mb-5">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setErrorMsg('Google sign-in failed')}
+            theme="outline"
+            size="large"
+            width="100%"
+            text="signin_with"
+            shape="rectangular"
+          />
+        </div>
+
+        {/* Divider */}
+        <div className="relative mb-5">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-border"></div>
+          </div>
+          <div className="relative flex justify-center text-xs">
+            <span className="bg-card px-3 text-muted-foreground font-medium">or continue with email</span>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -122,3 +160,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

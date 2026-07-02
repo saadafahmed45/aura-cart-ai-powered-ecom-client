@@ -72,3 +72,16 @@ export const reviewSchema = z.object({
   rating: z.preprocess((val) => Number(val), z.number().min(1).max(5)),
   comment: z.string().min(5, 'Review must be at least 5 characters')
 });
+
+export const heroSlideSchema = z.object({
+  title: z.string().min(2, 'Title must be at least 2 characters'),
+  description: z.string().optional().or(z.literal('')),
+  buttonText: z.string().optional().or(z.literal('')),
+  buttonLink: z.string().optional().or(z.literal('')),
+  order: z.preprocess((val) => {
+    if (val === '' || val === undefined || val === null) return 0;
+    return Number(val);
+  }, z.number().int().nonnegative().optional()).default(0),
+  isActive: z.boolean().default(true)
+});
+
