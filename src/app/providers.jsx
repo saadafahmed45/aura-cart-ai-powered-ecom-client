@@ -7,6 +7,8 @@ import { useAuthStore } from '../store/authStore';
 import { useCartStore } from '../store/cartStore';
 import { useWishlistStore } from '../store/wishlistStore';
 import { ToastProvider } from '../components/common/Toast';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Providers({ children }) {
   const [queryClient] = useState(() => new QueryClient({
@@ -40,6 +42,7 @@ export default function Providers({ children }) {
       <QueryClientProvider client={queryClient}>
         <ToastProvider>
           {children}
+          <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick pauseOnHover theme="dark" />
         </ToastProvider>
       </QueryClientProvider>
     </GoogleOAuthProvider>

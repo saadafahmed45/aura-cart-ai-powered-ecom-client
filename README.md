@@ -7,6 +7,8 @@ First, run the development server:
 <!-- Email: admin@ecommerce.com
 Password: Password123! -->
 
+<!-- google id = 520750863515-5fudhfpuqj8b7h67ikhs6rc1u3109jks.apps.googleusercontent.com -->
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.

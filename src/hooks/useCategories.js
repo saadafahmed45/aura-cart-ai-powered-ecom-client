@@ -4,7 +4,7 @@ import api from '../lib/api';
 export function useCategories() {
   const queryClient = useQueryClient();
 
-  const getCategoriesQuery = () => {
+  const useGetCategoriesQuery = () => {
     return useQuery({
       queryKey: ['categories'],
       queryFn: async () => {
@@ -15,8 +15,8 @@ export function useCategories() {
   };
 
   const createCategoryMutation = useMutation({
-    mutationFn: async ({ name, description }) => {
-      const res = await api.post('/categories', { name, description });
+    mutationFn: async (formData) => {
+      const res = await api.post('/categories', formData);
       return res.data.category;
     },
     onSuccess: () => {
@@ -26,8 +26,8 @@ export function useCategories() {
   });
 
   const updateCategoryMutation = useMutation({
-    mutationFn: async ({ id, name, description }) => {
-      const res = await api.put(`/categories/${id}`, { name, description });
+    mutationFn: async ({ id, formData }) => {
+      const res = await api.put(`/categories/${id}`, formData);
       return res.data.category;
     },
     onSuccess: () => {
@@ -47,7 +47,7 @@ export function useCategories() {
   });
 
   return {
-    getCategoriesQuery,
+    getCategoriesQuery: useGetCategoriesQuery,
     createCategory: createCategoryMutation.mutateAsync,
     isCreatingCategory: createCategoryMutation.isPending,
     updateCategory: updateCategoryMutation.mutateAsync,

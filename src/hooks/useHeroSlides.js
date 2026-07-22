@@ -4,7 +4,7 @@ import api from '../lib/api';
 export function useHeroSlides() {
   const queryClient = useQueryClient();
 
-  const getHeroSlidesQuery = () => {
+  const useGetHeroSlidesQuery = () => {
     return useQuery({
       queryKey: ['hero-slides'],
       queryFn: async () => {
@@ -14,7 +14,7 @@ export function useHeroSlides() {
     });
   };
 
-  const getAllHeroSlidesQuery = () => {
+  const useGetAllHeroSlidesQuery = () => {
     return useQuery({
       queryKey: ['hero-slides-all'],
       queryFn: async () => {
@@ -26,11 +26,7 @@ export function useHeroSlides() {
 
   const createHeroSlideMutation = useMutation({
     mutationFn: async (formData) => {
-      const res = await api.post('/hero-slides', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const res = await api.post('/hero-slides', formData);
       return res.data.slide;
     },
     onSuccess: () => {
@@ -41,11 +37,7 @@ export function useHeroSlides() {
 
   const updateHeroSlideMutation = useMutation({
     mutationFn: async ({ id, formData }) => {
-      const res = await api.put(`/hero-slides/${id}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const res = await api.put(`/hero-slides/${id}`, formData);
       return res.data.slide;
     },
     onSuccess: () => {
@@ -66,8 +58,8 @@ export function useHeroSlides() {
   });
 
   return {
-    getHeroSlidesQuery,
-    getAllHeroSlidesQuery,
+    getHeroSlidesQuery: useGetHeroSlidesQuery,
+    getAllHeroSlidesQuery: useGetAllHeroSlidesQuery,
 
     createHeroSlide: createHeroSlideMutation.mutateAsync,
     isCreatingHeroSlide: createHeroSlideMutation.isPending,

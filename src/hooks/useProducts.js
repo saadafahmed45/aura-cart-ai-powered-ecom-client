@@ -4,7 +4,7 @@ import api from '../lib/api';
 export function useProducts() {
   const queryClient = useQueryClient();
 
-  const getProductsQuery = (filters = {}) => {
+  const useGetProductsQuery = (filters = {}) => {
     return useQuery({
       queryKey: ['products', filters],
       queryFn: async () => {
@@ -18,6 +18,9 @@ export function useProducts() {
         if (filters.sort) params.append('sort', filters.sort);
         if (filters.page) params.append('page', filters.page);
         if (filters.limit) params.append('limit', filters.limit);
+        if (filters.status) params.append('status', filters.status);
+        if (filters.featured) params.append('featured', filters.featured);
+        if (filters.dashboard) params.append('dashboard', filters.dashboard);
 
         const res = await api.get(`/products?${params.toString()}`);
         return res.data;
@@ -25,7 +28,7 @@ export function useProducts() {
     });
   };
 
-  const getProductQuery = (id) => {
+  const useGetProductQuery = (id) => {
     return useQuery({
       queryKey: ['product', id],
       queryFn: async () => {
@@ -36,7 +39,7 @@ export function useProducts() {
     });
   };
 
-  const getRelatedProductsQuery = (id) => {
+  const useGetRelatedProductsQuery = (id) => {
     return useQuery({
       queryKey: ['products-related', id],
       queryFn: async () => {
@@ -47,7 +50,7 @@ export function useProducts() {
     });
   };
 
-  const getProductReviewsQuery = (id) => {
+  const useGetProductReviewsQuery = (id) => {
     return useQuery({
       queryKey: ['reviews-product', id],
       queryFn: async () => {
@@ -71,11 +74,7 @@ export function useProducts() {
 
   const createProductMutation = useMutation({
     mutationFn: async (formData) => {
-      const res = await api.post('/products', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const res = await api.post('/products', formData);
       return res.data.product;
     },
     onSuccess: () => {
@@ -85,11 +84,7 @@ export function useProducts() {
 
   const updateProductMutation = useMutation({
     mutationFn: async ({ id, formData }) => {
-      const res = await api.put(`/products/${id}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const res = await api.put(`/products/${id}`, formData);
       return res.data.product;
     },
     onSuccess: (data, variables) => {
@@ -109,10 +104,10 @@ export function useProducts() {
   });
 
   return {
-    getProductsQuery,
-    getProductQuery,
-    getRelatedProductsQuery,
-    getProductReviewsQuery,
+    getProductsQuery: useGetProductsQuery,
+    getProductQuery: useGetProductQuery,
+    getRelatedProductsQuery: useGetRelatedProductsQuery,
+    getProductReviewsQuery: useGetProductReviewsQuery,
     
     submitReview: submitReviewMutation.mutateAsync,
     isSubmittingReview: submitReviewMutation.isPending,

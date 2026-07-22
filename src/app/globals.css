@@ -1,83 +1,100 @@
 @import "tailwindcss";
 
+@theme {
+  --font-serif: var(--font-cormorant), serif;
+  --font-sans: var(--font-inter), sans-serif;
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
 :root {
-  /* ========================================================== */
-  /* LIGHT MODE BRAND SYSTEM - CHANGE THESE FOR EASY THEMING   */
-  /* ========================================================== */
+  --primary: #111111;
+  --primary-foreground: #FAF8F5;
   
-  /* Primary brand & CTA buttons (Default: Slate Dark) */
-  --primary: #0f172a;
-  --primary-foreground: #f8fafc;
+  --secondary: #F5F2ED;
+  --secondary-foreground: #111111;
   
-  /* Base Background and Canvas layers */
-  --background: #fafafa;
-  --foreground: #09090b;
+  --accent: #C6A66B;
+  --accent-foreground: #FFFFFF;
   
-  /* Layout Cards and Popups */
-  --card: #ffffff;
-  --card-foreground: #09090b;
-  --popover: #ffffff;
-  --popover-foreground: #09090b;
+  --background: #FAF8F5;
+  --foreground: #1A1A1A;
   
-  /* Muted backgrounds and helper texts */
-  --muted: #f8fafc;
-  --muted-foreground: #64748b;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
   
-  /* Accent highlights & Hover states */
-  --accent: #f1f5f9;
-  --accent-foreground: #0f172a;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
+  --muted: #F5F2ED;
+  --muted-foreground: #777777;
   
-  /* Error and Alert Indicators */
-  --destructive: #ef4444;
-  --destructive-foreground: #f8fafc;
+  --border: #ECECEC;
+  --input: #ECECEC;
+  --ring: #C6A66B;
   
-  /* Borders, Input outlines and Focus Ring */
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #0f172a;
+  --success: #0C8A4A;
+  --error: #D94C4C;
   
-  --radius: 0.5rem;
+  --destructive: #D94C4C;
+  --destructive-foreground: #FFFFFF;
+  
+  --radius: 0.25rem; /* Luxury brand - sharp, elegant minimal corners */
 }
 
 .dark {
-  /* ========================================================== */
-  /* DARK MODE BRAND SYSTEM - CHANGE THESE FOR DARK THEMES      */
-  /* ========================================================== */
+  --primary: #FAF8F5;
+  --primary-foreground: #111111;
   
-  /* Primary brand & CTA buttons (Default: Slate light) */
-  --primary: #fafafa;
-  --primary-foreground: #0f172a;
+  --secondary: #1C1B19;
+  --secondary-foreground: #FAF8F5;
   
-  /* Base Background and Canvas layers */
-  --background: #09090b;
-  --foreground: #fafafa;
+  --accent: #C6A66B;
+  --accent-foreground: #111111;
   
-  /* Layout Cards and Popups */
-  --card: #0d0d11;
-  --card-foreground: #fafafa;
-  --popover: #0d0d11;
-  --popover-foreground: #fafafa;
+  --background: #111111;
+  --foreground: #FAF8F5;
   
-  /* Muted backgrounds and helper texts */
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
+  --card: #181715;
+  --card-foreground: #FAF8F5;
+  --popover: #181715;
+  --popover-foreground: #FAF8F5;
   
-  /* Accent highlights & Hover states */
-  --accent: #1e293b;
-  --accent-foreground: #fafafa;
-  --secondary: #1e293b;
-  --secondary-foreground: #fafafa;
+  --muted: #1C1B19;
+  --muted-foreground: #A19E99;
   
-  /* Error and Alert Indicators */
-  --destructive: #7f1d1d;
-  --destructive-foreground: #fafafa;
+  --border: #2A2926;
+  --input: #2A2926;
+  --ring: #C6A66B;
   
-  /* Borders, Input outlines and Focus Ring */
-  --border: #1e293b;
-  --input: #1e293b;
-  --ring: #cbd5e1;
+  --success: #0E9F56;
+  --error: #E55C5C;
+  
+  --destructive: #E55C5C;
+  --destructive-foreground: #111111;
 }
 
 * {
@@ -87,26 +104,51 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: var(--font-cormorant), serif;
+}
+
 .glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(250, 248, 245, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(236, 236, 236, 0.3);
 }
 
 .dark .glass {
-  background: rgba(13, 13, 17, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(17, 17, 17, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(42, 41, 38, 0.3);
+}
+
+/* Floating animation for perfume bottles */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.floating-bottle {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Subtle micro-animations */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.05);
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -114,10 +156,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
+  background: var(--border);
+  border-radius: 2px;
 }
 
-.dark ::-webkit-scrollbar-thumb {
-  background: #334155;
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }

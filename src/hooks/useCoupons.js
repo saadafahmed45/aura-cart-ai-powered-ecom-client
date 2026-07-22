@@ -11,7 +11,7 @@ export function useCoupons() {
     }
   });
 
-  const getCouponsQuery = () => {
+  const useGetCouponsQuery = () => {
     return useQuery({
       queryKey: ['coupons'],
       queryFn: async () => {
@@ -55,7 +55,7 @@ export function useCoupons() {
     validateCoupon: validateCouponMutation.mutateAsync,
     isValidatingCoupon: validateCouponMutation.isPending,
 
-    getCouponsQuery,
+    getCouponsQuery: useGetCouponsQuery,
     createCoupon: createCouponMutation.mutateAsync,
     isCreatingCoupon: createCouponMutation.isPending,
     updateCoupon: updateCouponMutation.mutateAsync,

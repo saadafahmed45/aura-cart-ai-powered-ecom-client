@@ -19,19 +19,23 @@ export const useCartStore = create((set, get) => ({
     }
   },
 
-  addToCart: (product, quantity = 1) => {
+  addToCart: (product, variant, quantity = 1) => {
     const { items } = get();
-    const existingItem = items.find(item => item.product._id === product._id);
+    if (!variant) return;
+
+    const existingItem = items.find(
+      item => item.product._id === product._id && item.variant?.size === variant.size
+    );
 
     let updatedItems;
     if (existingItem) {
       updatedItems = items.map(item =>
-        item.product._id === product._id
-          ? { ...item, quantity: Math.min(item.quantity + quantity, product.stock) }
+        item.product._id === product._id && item.variant?.size === variant.size
+          ? { ...item, quantity: Math.min(item.quantity + quantity, variant.stock) }
           : item
       );
     } else {
-      updatedItems = [...items, { product, quantity: Math.min(quantity, product.stock) }];
+      updatedItems = [...items, { product, variant, quantity: Math.min(quantity, variant.stock) }];
     }
 
     if (typeof window !== 'undefined') {
@@ -40,11 +44,11 @@ export const useCartStore = create((set, get) => ({
     set({ items: updatedItems });
   },
 
-  updateQuantity: (productId, quantity) => {
+  updateQuantity: (productId, size, quantity) => {
     const { items } = get();
     const updatedItems = items.map(item =>
-      item.product._id === productId
-        ? { ...item, quantity: Math.min(Math.max(1, quantity), item.product.stock) }
+      item.product._id === productId && item.variant?.size === size
+        ? { ...item, quantity: Math.min(Math.max(1, quantity), item.variant.stock) }
         : item
     );
 
@@ -54,9 +58,11 @@ export const useCartStore = create((set, get) => ({
     set({ items: updatedItems });
   },
 
-  removeFromCart: (productId) => {
+  removeFromCart: (productId, size) => {
     const { items } = get();
-    const updatedItems = items.filter(item => item.product._id !== productId);
+    const updatedItems = items.filter(
+      item => !(item.product._id === productId && item.variant?.size === size)
+    );
 
     if (typeof window !== 'undefined') {
       localStorage.setItem('cartItems', JSON.stringify(updatedItems));
@@ -90,7 +96,9 @@ export const useCartStore = create((set, get) => ({
     const { items, coupon } = get();
     
     const subtotal = items.reduce((acc, item) => {
-      const price = item.product.discountPrice > 0 ? item.product.discountPrice : item.product.price;
+      const v = item.variant;
+      if (!v) return acc;
+      const price = v.salePrice > 0 && v.salePrice < v.price ? v.salePrice : v.price;
       return acc + price * item.quantity;
     }, 0);
 

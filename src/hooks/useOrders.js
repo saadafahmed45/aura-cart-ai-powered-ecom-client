@@ -15,7 +15,7 @@ export function useOrders() {
     }
   });
 
-  const getMyOrdersQuery = (page = 1) => {
+  const useGetMyOrdersQuery = (page = 1) => {
     return useQuery({
       queryKey: ['orders', 'myorders', page],
       queryFn: async () => {
@@ -25,7 +25,7 @@ export function useOrders() {
     });
   };
 
-  const getOrderDetailsQuery = (id) => {
+  const useGetOrderDetailsQuery = (id) => {
     return useQuery({
       queryKey: ['order', id],
       queryFn: async () => {
@@ -36,7 +36,7 @@ export function useOrders() {
     });
   };
 
-  const getAdminOrdersQuery = (filters = {}) => {
+  const useGetAdminOrdersQuery = (filters = {}) => {
     return useQuery({
       queryKey: ['orders', 'admin', filters],
       queryFn: async () => {
@@ -63,7 +63,7 @@ export function useOrders() {
     }
   });
 
-  const getAnalyticsQuery = () => {
+  const useGetAnalyticsQuery = () => {
     return useQuery({
       queryKey: ['analytics'],
       queryFn: async () => {
@@ -77,12 +77,12 @@ export function useOrders() {
     createOrder: createOrderMutation.mutateAsync,
     isCreatingOrder: createOrderMutation.isPending,
 
-    getMyOrdersQuery,
-    getOrderDetailsQuery,
+    getMyOrdersQuery: useGetMyOrdersQuery,
+    getOrderDetailsQuery: useGetOrderDetailsQuery,
 
-    getAdminOrdersQuery,
+    getAdminOrdersQuery: useGetAdminOrdersQuery,
     updateOrderStatus: updateOrderStatusMutation.mutateAsync,
     isUpdatingStatus: updateOrderStatusMutation.isPending,
-    getAnalyticsQuery
+    getAnalyticsQuery: useGetAnalyticsQuery
   };
 }

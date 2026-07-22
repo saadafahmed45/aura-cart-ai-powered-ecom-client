@@ -4,7 +4,7 @@ import api from '../lib/api';
 export function useUsers() {
   const queryClient = useQueryClient();
 
-  const getUsersQuery = (filters = {}) => {
+  const useGetUsersQuery = (filters = {}) => {
     return useQuery({
       queryKey: ['users', filters],
       queryFn: async () => {
@@ -42,7 +42,7 @@ export function useUsers() {
   });
 
   return {
-    getUsersQuery,
+    getUsersQuery: useGetUsersQuery,
     updateUser: updateUserMutation.mutateAsync,
     isUpdatingUser: updateUserMutation.isPending,
     deleteUser: deleteUserMutation.mutateAsync,

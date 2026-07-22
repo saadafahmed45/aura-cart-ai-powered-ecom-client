@@ -41,18 +41,49 @@ export const checkoutSchema = z.object({
 
 export const productSchema = z.object({
   name: z.string().min(3, 'Product name must be at least 3 characters'),
-  description: z.string().min(10, 'Description must be at least 10 characters'),
-  price: z.preprocess((val) => Number(val), z.number().positive('Price must be greater than 0')),
-  discountPrice: z.preprocess((val) => {
-    if (val === '' || val === undefined || val === null) return 0;
-    return Number(val);
-  }, z.number().nonnegative().optional()).default(0),
-  category: z.string().min(1, 'Category is required'),
   brand: z.string().min(2, 'Brand is required'),
-  stock: z.preprocess((val) => Number(val), z.number().int().nonnegative('Stock cannot be negative')),
-}).refine((data) => !data.discountPrice || data.discountPrice < data.price, {
-  message: 'Discount price must be less than the regular price',
-  path: ['discountPrice']
+  category: z.string().min(1, 'Category is required'),
+  shortDescription: z.string().optional(),
+  fullDescription: z.string().min(10, 'Description must be at least 10 characters'),
+  status: z.enum(['active', 'inactive', 'draft']).default('active'),
+  featured: z.boolean().default(false),
+  bestSeller: z.boolean().default(false),
+  newArrival: z.boolean().default(false),
+  variants: z.array(z.object({
+    size: z.string().min(1, 'Size is required'),
+    price: z.preprocess((val) => Number(val), z.number().positive('Price must be positive')),
+    salePrice: z.preprocess((val) => {
+      if (val === '' || val === undefined || val === null) return 0;
+      return Number(val);
+    }, z.number().nonnegative().optional()).default(0),
+    sku: z.string().min(2, 'SKU is required'),
+    stock: z.preprocess((val) => Number(val), z.number().int().nonnegative('Stock cannot be negative')),
+    image: z.string().optional(),
+    active: z.boolean().default(true)
+  })).min(1, 'At least one variant size is required'),
+  fragrance: z.object({
+    fragranceFamily: z.string().optional().or(z.literal('')),
+    topNotes: z.preprocess((val) => {
+      if (typeof val === 'string') return val.split(',').map(s => s.trim()).filter(Boolean);
+      return val;
+    }, z.array(z.string())),
+    middleNotes: z.preprocess((val) => {
+      if (typeof val === 'string') return val.split(',').map(s => s.trim()).filter(Boolean);
+      return val;
+    }, z.array(z.string())),
+    baseNotes: z.preprocess((val) => {
+      if (typeof val === 'string') return val.split(',').map(s => s.trim()).filter(Boolean);
+      return val;
+    }, z.array(z.string())),
+    concentration: z.enum(['EDP', 'EDT', 'Parfum', 'Cologne', 'Eau Fraiche', 'Other']).default('EDP'),
+    gender: z.enum(['Men', 'Women', 'Unisex']).default('Unisex'),
+    season: z.array(z.string()).optional().default([]),
+    occasion: z.array(z.string()).optional().default([])
+  }).optional(),
+  performance: z.object({
+    longevity: z.preprocess((val) => Number(val), z.number().min(0).max(100)).default(80),
+    projection: z.preprocess((val) => Number(val), z.number().min(0).max(100)).default(80)
+  }).optional()
 });
 
 export const categorySchema = z.object({
